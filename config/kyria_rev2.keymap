@@ -3,28 +3,36 @@
  *
  * SPDX-License-Identifier: MIT
  */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
 / {
     keymap {
         compatible = "zmk,keymap";
-
+        
         default_layer {
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
             bindings = <
-    &kp ESC   &kp Q &kp W &kp E &kp R &kp T                                                &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSLH
-    &kp TAB   &kp A &kp S &kp D &kp F &kp G                                                &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-    &kp LSHFT &kp Z &kp X &kp C &kp V &kp B &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RCTRL
-                     &kp LGUI &kp DEL &kp RET &kp SPACE &kp ESC        &kp RET  &kp SPACE  &kp TAB &kp BSPC &kp RALT
+                &kp LGUI  &kp Q &kp W &kp F    &kp P     &kp B                                           &kp J &kp L   &kp U     &kp Y   &kp SEMI &kp RGUI
+                &kp LSHFT &kp A &kp R &kp S    &kp T     &kp G                                           &kp M &kp N   &kp E     &kp I   &kp O    &kp RSHIFT
+                &kp LALT  &kp Z &kp X &kp C    &kp D     &kp V &to 1     &kp LSHFT    &kp LCTRL &to 1    &kp K &kp H   &kp COMMA &kp DOT &kp FSLH &kp RALT
+                                      &kp LEFT &kp ENTER &kp Y &kp SPACE &kp TAB      &kp DEL   &kp BSPC &kp Y &kp ESC &kp RIGHT
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
+        symbols {
+            bindings = <
+                &kp PIPE    &kp N7       &kp N5    &kp N3   &kp N1   &kp N9                                         &kp N8   &kp N0       &kp N2   &kp N4   &kp N6    &kp BSLH
+                &kp KP_PLUS &kp KP_EQUAL &kp TILDE &kp LPAR &kp LBKT &kp LBRC                                       &kp RBRC &kp RBKT     &kp RPAR &kp DQT  &kp GRAVE &kp SQT
+                &to 0       &kp AMPS     &kp PRCNT &kp HASH &kp EXCL &kp UNDER &to 0     &to 0     &to 0   &to 0    &kp STAR &kp KP_MINUS &kp AT   &kp DLLR &kp CARET &to 0
+                                                   &to 0    &to 0    &to 0     &kp SPACE &kp TAB   &kp DEL &kp BSPC &to 0    &to 0        &to 0
+            >;
+        };
+        // functions {
+        //     bindings = <
+        //         &kp Z &kp F9 &kp F10 &kp F11 &kp F12 &kp Z                                      &kp C_VOL_UP   &kp Z      &kp UP     &kp Z      &kp F20 &kp Z
+        //         &kp Z &kp F5 &kp F6  &kp F7  &kp F8  &kp ESC                                    &kp C_VOL_DOWN &kp LEFT   &kp DOWN   &kp RIGHT  &kp Z   &kp Z
+        //         &kp Z &kp F1 &kp F2  &kp F3  &kp F4  &kp Z &kp Z     &kp Z     &kp Z   &kp Z    &kp C_MUTE     &kp C_PREV &kp C_PLAY &kp C_NEXT &kp F19 &kp Z
+        //                              &kp Z   &kp Z   &kp Z &kp SPACE &kp TAB   &kp DEL &kp BSPC &kp Z          &kp Z      &kp Z
+        //     >;
+        // };
     };
 };
