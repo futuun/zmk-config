@@ -21,7 +21,10 @@
             label = "ZM_to_1";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp F16 &to 1>;
+            bindings
+                = <&macro_press &kp F16 &to 1>
+                , <&macro_release &kp F13 &to 0>
+                ;
         };
 
         to_2: to_2 {
