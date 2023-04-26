@@ -5,6 +5,8 @@
  */
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/rgb.h>
 
 / {
     macros {
@@ -28,6 +30,13 @@
             #binding-cells = <0>;
             bindings = <&kp F18 &to 2>;
         };
+
+        to_3: to_3 {
+            label = "ZM_to_3";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp F17 &to 3>;
+        };
     };
 
     keymap {
@@ -35,28 +44,37 @@
         
         default_layer {
             bindings = <
-                &kp LGUI    &kp Q        &kp W     &kp F    &kp P     &kp B                                                 &kp J       &kp L        &kp U     &kp Y      &kp SEMI  &kp RGUI
-                &kp LSHFT   &kp A        &kp R     &kp S    &kp T     &kp G                                                 &kp M       &kp N        &kp E     &kp I      &kp O     &kp RSHIFT
-                &kp LALT    &kp Z        &kp X     &kp C    &kp D     &kp V     &to_1     &kp LSHFT /**/ &kp LCTRL &to_1    &kp K       &kp H        &kp COMMA &kp DOT    &kp FSLH  &kp RALT
-                                                   &kp LEFT &kp ENTER &to_2     &kp SPACE &kp TAB   /**/ &kp DEL   &kp BSPC &to_2       &kp ESC      &kp RIGHT
+                &kp LGUI     &kp Q        &kp W     &kp F    &kp P     &kp B                                                 &kp J       &kp L        &kp U     &kp Y      &kp SEMI  &kp RGUI
+                &kp LSHFT    &kp A        &kp R     &kp S    &kp T     &kp G                                                 &kp M       &kp N        &kp E     &kp I      &kp O     &kp RSHIFT
+                &kp LALT     &kp Z        &kp X     &kp C    &kp D     &kp V     &to_2     &kp LSHFT /**/ &kp LCTRL &to_2    &kp K       &kp H        &kp COMMA &kp DOT    &kp FSLH  &kp RALT
+                                                    &kp LEFT &kp ENTER &to_1     &kp SPACE &kp TAB   /**/ &kp DEL   &kp BSPC &to_1       &kp ESC      &kp RIGHT
             >;
         };
 
         sym {
             bindings = <
-                &kp PIPE    &kp N7       &kp N5    &kp N3   &kp N1    &kp N9                                               &kp N8       &kp N0       &kp N2    &kp N4     &kp N6    &kp BSLH
-                &kp KP_PLUS &kp KP_EQUAL &kp TILDE &kp LPAR &kp LBKT  &kp LBRC                                             &kp RBRC     &kp RBKT     &kp RPAR  &kp DQT    &kp GRAVE &kp SQT
-                &to_0       &kp AMPS     &kp PRCNT &kp HASH &kp EXCL  &kp UNDER &to_0     &to_0    /**/ &to_0     &to_0    &kp STAR     &kp KP_MINUS &kp AT    &kp DLLR   &kp CARET &to_0
-                                                   &to_0    &to_0     &to_0     &kp SPACE &kp TAB  /**/ &kp DEL   &kp BSPC &to_0        &to_0        &to_0
+                &kp PIPE     &kp N7       &kp N5    &kp N3   &kp N1    &kp N9                                               &kp N8       &kp N0       &kp N2    &kp N4     &kp N6    &kp BSLH
+                &kp KP_PLUS  &kp KP_EQUAL &kp TILDE &kp LPAR &kp LBKT  &kp LBRC                                             &kp RBRC     &kp RBKT     &kp RPAR  &kp DQT    &kp GRAVE &kp SQT
+                &to_0        &kp AMPS     &kp PRCNT &kp HASH &kp EXCL  &kp UNDER &to_0     &to_0    /**/ &to_0     &to_0    &kp STAR     &kp KP_MINUS &kp AT    &kp DLLR   &kp CARET &to_0
+                                                    &to_0    &to_0     &to_0     &kp SPACE &kp TAB  /**/ &kp DEL   &kp BSPC &to_0        &to_0        &to_0
             >;
         };
 
         func {
             bindings = <
-                &to_0       &kp F9       &kp F10   &kp F11  &kp F12   &to_0                                                &kp C_VOL_UP &to_0        &kp UP    &to_0      &kp F20   &to_0
-                &to_0       &kp F5       &kp F6    &kp F7   &kp F8    &kp ESC                                              &kp C_VOL_DN &kp LEFT     &kp DOWN  &kp RIGHT  &to_0     &to_0
-                &to_0       &kp F1       &kp F2    &kp F3   &kp F4    &to_0     &to_0     &to_0     /**/ &to_0    &to_0    &kp C_MUTE   &kp C_PREV   &kp C_PP  &kp C_NEXT &kp F19   &to_0
-                                                   &to_0    &to_0     &to_0     &kp SPACE &kp TAB   /**/ &kp DEL  &kp BSPC &to_0        &to_0        &to_0
+                &bt BT_SEL 0 &kp F9       &kp F10   &kp F11  &kp F12   &to_0                                                &kp C_VOL_UP &to_0        &kp UP    &to_0      &kp F20   &to_0
+                &bt BT_SEL 4 &kp F5       &kp F6    &kp F7   &kp F8    &kp ESC                                              &kp C_VOL_DN &kp LEFT     &kp DOWN  &kp RIGHT  &to_0     &to_0
+                &to_3        &kp F1       &kp F2    &kp F3   &kp F4    &to_0     &to_0     &to_0     /**/ &to_0    &to_0    &kp C_MUTE   &kp C_PREV   &kp C_PP  &kp C_NEXT &kp F19   &to_0
+                                                    &to_0    &to_0     &to_0     &kp SPACE &kp TAB   /**/ &kp DEL  &kp BSPC &to_0        &to_0        &to_0
+            >;
+        };
+
+        rgb {
+            bindings = <
+                &to_0 &rgb_ug RGB_SPI &rgb_ug RGB_SPD &to_0           &to_0           &to_0                       /**/             &to_0 &to_0 &to_0 &to_0 &to_0 &bt BT_CLR
+                &to_0 &rgb_ug RGB_TOG &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_EFF             /**/             &to_0 &to_0 &to_0 &to_0 &to_0 &to_2
+                &to_0 &to_0           &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFR &to_0 &to_0 /**/ &to_0 &to_0 &to_0 &to_0 &to_0 &to_0 &to_0 &to_0
+                                                      &to_0           &to_0           &to_0           &to_0 &to_0 /**/ &to_0 &to_0 &to_0 &to_0 &to_0
             >;
         };
     };
