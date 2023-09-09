@@ -21,28 +21,28 @@
             label = "ZM_to_0";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp F13 &to 0>;
+            bindings = <&to 0 &kp F13>;
         };
 
         to_1: to_1 {
             label = "ZM_to_1";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp F16 &to 1>;
+            bindings = <&to 1 &kp F16>;
         };
 
         to_2: to_2 {
             label = "ZM_to_2";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp F18 &to 2>;
+            bindings = <&to 2 &kp F18>;
         };
 
         to_3: to_3 {
             label = "ZM_to_3";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp F17 &to 3>;
+            bindings = <&to 3 &kp F17>;
         };
     };
 
@@ -77,14 +77,14 @@
 
         func {
             bindings = <
-                &kp LGUI     &kp F9       &kp F10   &kp F11  &kp F12   &to_3                                             &kp C_VOL_UP &to_0        &kp UP    &to_0      &kp F20   &kp RGUI
-                &kp LSHFT    &kp F5       &kp F6    &kp F7   &kp F8    &kp ESC                                           &kp C_VOL_DN &kp LEFT     &kp DOWN  &kp RIGHT  &kp F21   &kp RSHIFT
+                &kp LGUI     &kp F9       &kp F10   &kp F11  &kp F12   &to_3                                             &kp C_VOL_UP &to_0        &to_0     &to_0      &kp F20   &kp RGUI
+                &kp LSHFT    &kp F5       &kp F6    &kp F7   &kp F8    &kp ESC                                           &kp C_VOL_DN &kp LEFT     &kp DOWN  &kp UP     &kp RIGHT &kp RSHIFT
                 &kp LALT     &kp F1       &kp F2    &kp F3   &kp F4    &to_3     &to_0     &to_0   /**/ &to_0   &to_0    &kp C_MUTE   &kp C_PREV   &kp C_PP  &kp C_NEXT &kp F19   &kp RALT
                                                     &kp RCTRL &kp ENTER &to_1    &kp SPACE &kp TAB /**/ &kp DEL &kp BSPC &to_0        &kp ESC      &kp RCTRL
             >;
             sensor-bindings = <
-                &inc_dec_kp LG(LC(LS(N4))) LG(LS(N4))
-                &inc_dec_kp C_VOL_DN C_VOL_UP
+                &inc_dec_kp UP DOWN
+                &inc_dec_kp LEFT RIGHT
             >;
         };
 
