@@ -59,9 +59,9 @@
 
         sym {
             bindings = <
-                &kp LGUI     &none        &none     &none     &kp SQT   &none                                            &none        &kp SQT      &none     &none      &kp SEMI  &kp RGUI
+                &kp LGUI     &kp NUBS    &kp TILDE &kp TILDE2 &kp SQT   &kp NUHS                                         &none        &kp SQT      &none     &none      &kp SEMI  &kp RGUI
                 &kp LSHFT    &kp N7       &kp N5    &kp N3    &kp N1    &kp N9                                           &kp N0       &kp N2       &kp N4    &kp N6     &kp N8    &kp RSHIFT
-                &kp LALT     &kp NUBS     &kp SEMI  &kp BSLH  &kp MINUS &kp LBKT &to_0     &to_3   /**/ &to_0   &to_0    &kp RBKT     &kp EQUAL    &kp COMMA &kp DOT    &kp FSLH  &kp RALT
+                &kp LALT     &kp GRAVE    &kp SEMI  &kp BSLH  &kp MINUS &kp LBKT &to_0     &to_3   /**/ &to_0   &to_0    &kp RBKT     &kp EQUAL    &kp COMMA &kp DOT    &kp FSLH  &kp RALT
                                                     &kp RCTRL &kp ENTER &to_0    &kp SPACE &kp TAB /**/ &kp DEL &kp BSPC &to_2        &kp ESC      &kp RCTRL
             >;
             sensor-bindings = <
