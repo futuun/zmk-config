@@ -6,9 +6,11 @@ manifest:
       url-base: https://github.com/petejohanson
     - name: infused-kim
       url-base: https://github.com/infused-kim
+    - name: futuun
+      url-base: https://github.com/futuun
   projects:
     - name: zmk
-      remote: infused-kim
+      remote: futuun
       revision: pr-testing/mouse_ps2
       import: app/west.yml
   self:
