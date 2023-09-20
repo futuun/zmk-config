@@ -10,7 +10,7 @@ manifest:
       url-base: https://github.com/futuun
   projects:
     - name: zmk
-      remote: futuun
+      remote: infused-kim
       revision: pr-testing/mouse_ps2
       import: app/west.yml
   self:

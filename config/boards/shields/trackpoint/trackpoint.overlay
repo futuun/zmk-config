@@ -1,0 +1,33 @@
+/{
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "KSCAN";
+        input-gpios = <&pro_micro 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    };
+};
+
+/ {
+    gpio_ps2: gpio_ps2 {
+        status = "okay";
+        compatible = "gpio-ps2";
+        scl-gpios = <&pro_micro 21 0>;
+        sda-gpios = <&pro_micro 20 0>;
+    };
+};
+
+/ {
+    mouse_ps2: mouse_ps2 {
+        status = "okay";
+        compatible = "zmk,mouse-ps2";
+        ps2-device = <&gpio_ps2>;
+        rst-gpios = <&pro_micro 19 0>;
+    };
+};
+
+&gpiote {
+    interrupts = < 0x6 0 >;
+};

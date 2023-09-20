@@ -1,0 +1,6 @@
+if TRACKPOINT
+
+config ZMK_KEYBOARD_NAME
+    default "trackpoint"
+
+endif
