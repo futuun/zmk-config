@@ -10,6 +10,7 @@
 
 &left_encoder  { steps = <36>; };
 &right_encoder { steps = <36>; };
+&led_strip { chain-length = <25>; };
 
 / {
     macros {
