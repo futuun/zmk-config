@@ -149,10 +149,10 @@
 
         config { 
             bindings = <
-                &none   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none     &none                     /**/                     &none   &none           &rgb_ug RGB_COLOR_HSB(30,100,100) &rgb_ug RGB_COLOR_HSB(30,80,100) &rgb_ug RGB_COLOR_HSB(30,100,80) &none
-                &none   &none        &none        &none        &none     &none                     /**/                     &none   &rgb_ug RGB_EFF &rgb_ug RGB_ON                    &rgb_ug RGB_OFF &rgb_ug RGB_TOG  &none
-                &none   &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &none     &none  &to_0     &to_0    /**/ &to_0      &to_0    &none   &none           &none                             &none           &none            &none
-                                                  &to_3        &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_0   &kp RGUI        &to_3
+                &none   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none     &none                     /**/                     &rgb_ug RGB_BRI &rgb_ug RGB_BRD &rgb_ug RGB_COLOR_HSB(30,100,100) &rgb_ug RGB_COLOR_HSB(30,80,100) &rgb_ug RGB_COLOR_HSB(30,100,80) &none
+                &none   &none        &none        &none        &none     &rgb_ug RGB_EFF           /**/                     &rgb_ug RGB_HUI &rgb_ug RGB_HUD &rgb_ug RGB_ON                    &rgb_ug RGB_OFF &rgb_ug RGB_TOG  &none
+                &none   &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &none     &none  &to_0     &to_0    /**/ &to_0      &to_0    &rgb_ug RGB_SAI &rgb_ug RGB_SAD &none                             &none           &none            &none
+                                                  &to_3        &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_0           &kp RGUI        &to_3
             >;
 
             sensor-bindings = <
