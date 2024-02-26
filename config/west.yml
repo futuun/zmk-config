@@ -10,8 +10,8 @@ manifest:
       url-base: https://github.com/futuun
   projects:
     - name: zmk
-      remote: petejohanson
-      revision: feat/pointers-move-scroll
+      remote: infused-kim
+      revision: pr-testing/mouse_ps2_v2
       import: app/west.yml
   self:
     path: config

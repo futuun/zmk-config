@@ -1,0 +1,14 @@
+config SHIELD_KYRIA
+    bool
+
+config SHIELD_KYRIA_REV3_D_LEFT
+    def_bool $(shields_list_contains,kyria_rev3_d_left)
+    select SHIELD_KYRIA
+
+config SHIELD_KYRIA_REV3_D_RIGHT
+    def_bool $(shields_list_contains,kyria_rev3_d_right)
+    select SHIELD_KYRIA
+
+config SHIELD_KYRIA_REV3_D_DONGLE
+    def_bool $(shields_list_contains,kyria_rev3_d_dongle)
+    select SHIELD_KYRIA
