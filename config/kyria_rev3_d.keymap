@@ -29,43 +29,6 @@
         };
     };
 
-    macros {
-        to_0: to_0 {
-            label = "ZM_to_0";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 0 &kp F13>;
-        };
-
-        to_1: to_1 {
-            label = "ZM_to_1";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 1 &kp F16>;
-        };
-
-        to_2: to_2 {
-            label = "ZM_to_2";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 2 &kp F18>;
-        };
-
-        to_3: to_3 {
-            label = "ZM_to_3";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 3 &kp F17>;
-        };
-
-        to_4: to_4 {
-            label = "ZM_to_4";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&to 4 &kp F19>;
-        };
-    };
-
     behaviors {
         rot_mmv: sensor_rotate_mmv {
             compatible = "zmk,behavior-sensor-rotate-var";
@@ -109,8 +72,8 @@
             bindings = <
                 &kp ESC    &kp Q     &kp W    &kp F    &kp P     &kp B                                                 &kp J     &kp L     &kp U      &kp Y      &kp SEMI  &kp DEL
                 &kp TAB    &kp A     &kp R    &kp S    &kp T     &kp G                                                 &kp M     &kp N     &kp E      &kp I      &kp O     &kp SQT
-                &kp GRAVE  &kp Z     &kp X    &kp C    &kp D     &kp V  &to_0     &to_0    /**/ &to_0       &to_0      &kp K     &kp H     &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
-                                              &to_3    &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT  &kp BSPC   &to_2     &kp RGUI  &to_3
+                &kp GRAVE  &kp Z     &kp X    &kp C    &kp D     &kp V  &to 0     &to 0    /**/ &to 0       &to 0      &kp K     &kp H     &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
+                                              &to 3    &kp RCTRL &to 1  &kp SPACE &kp LALT /**/ &kp RSHIFT  &kp BSPC   &to 2     &kp RGUI  &to 3
             >;
 
             sensor-bindings = <
@@ -125,8 +88,8 @@
             bindings = <
                 &kp ESC      &kp AMPS    &kp PRCNT &kp HASH &kp EXCL   &kp LPAR                                             &kp RPAR  &kp AT    &kp DLLR  &kp CARET  &kp ASTRK &kp DEL
                 &kp TAB      &kp N7      &kp N5    &kp N3   &kp N1     &kp N9                                               &kp N0    &kp N2    &kp N4    &kp N6     &kp N8    &kp SQT
-                &kp GRAVE    &kp UNDER   &kp PIPE  &kp BSLH &kp MINUS  &kp LBKT &to_0     &to_3    /**/ &to_0      &to_0    &kp RBKT  &kp EQUAL &kp COMMA &kp DOT    &kp FSLH  &kp ENTER
-                                                   &to_3    &kp RCTRL  &to_0    &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_2     &kp RGUI  &to_3
+                &kp GRAVE    &kp UNDER   &kp PIPE  &kp BSLH &kp MINUS  &kp LBKT &to 0     &to 3    /**/ &to 0      &to 0    &kp RBKT  &kp EQUAL &kp COMMA &kp DOT    &kp FSLH  &kp ENTER
+                                                   &to 3    &kp RCTRL  &to 0    &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to 2     &kp RGUI  &to 3
             >;
 
             sensor-bindings = <
@@ -141,8 +104,8 @@
             bindings = <
                 &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6                                             &kp ESC    &none      &none    &none      &none     &none
                 &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12                                            &none      &kp LEFT   &kp DOWN &kp UP     &kp RIGHT &kp C_VOL_UP
-                &none     &none     &none     &none     &none     &none  &to_0     &to_0    /**/ &to_0      &to_0    &kp C_MUTE &kp C_PREV &kp C_PP &kp C_NEXT &none     &kp C_VOL_DN
-                                              &to_3     &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_0      &kp RGUI   &to_3
+                &none     &none     &none     &none     &none     &none  &to 0     &to 0    /**/ &to 0      &to 0    &kp C_MUTE &kp C_PREV &kp C_PP &kp C_NEXT &none     &kp C_VOL_DN
+                                              &to 3     &kp RCTRL &to 1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to 0      &kp RGUI   &to 3
             >;
 
             sensor-bindings = <
@@ -156,8 +119,8 @@
             bindings = <                                                                                                                     /* Scroll up/down are reversed on mac */
                 &none     &none     &none     &none     &none     &none                     /**/                     &none   &msc SCRL_RIGHT &msc SCRL_UP   &msc SCRL_DOWN &msc SCRL_LEFT  &none
                 &none     &none     &mkp MB3  &mkp MB2  &mkp MB1  &none                     /**/                     &none   &mmv MOVE_LEFT  &mmv MOVE_DOWN &mmv MOVE_UP   &mmv MOVE_RIGHT &none
-                &none     &none     &none     &none     &none     &none  &to_0     &to_0    /**/ &to_0      &to_0    &none   &none           &none          &none          &none           &none
-                                              &to_4     &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_0   &kp RGUI         &to_0
+                &none     &none     &none     &none     &none     &none  &to 0     &to 0    /**/ &to 0      &to 0    &none   &none           &none          &none          &none           &none
+                                              &to 4     &kp RCTRL &to 1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to 0   &kp RGUI         &to 0
             >;
 
             sensor-bindings = <
@@ -172,8 +135,8 @@
             bindings = <
                 &none   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none     &none                     /**/                     &rgb_ug RGB_BRI &rgb_ug RGB_BRD &rgb_ug RGB_COLOR_HSB(30,100,100) &rgb_ug RGB_COLOR_HSB(30,80,100) &rgb_ug RGB_COLOR_HSB(30,100,80) &none
                 &none   &none        &none        &none        &none     &rgb_ug RGB_EFF           /**/                     &rgb_ug RGB_HUI &rgb_ug RGB_HUD &rgb_ug RGB_ON                    &rgb_ug RGB_OFF &rgb_ug RGB_TOG  &none
-                &none   &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &none     &none  &to_0     &to_0    /**/ &to_0      &to_0    &rgb_ug RGB_SAI &rgb_ug RGB_SAD &none                             &none           &none            &none
-                                                  &to_3        &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to_0           &kp RGUI        &to_3
+                &none   &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &none     &none  &to 0     &to 0    /**/ &to 0      &to 0    &rgb_ug RGB_SAI &rgb_ug RGB_SAD &none                             &none           &none            &none
+                                                  &to 3        &kp RCTRL &to 1  &kp SPACE &kp LALT /**/ &kp RSHIFT &kp BSPC &to 0           &kp RGUI        &to 3
             >;
 
             sensor-bindings = <
