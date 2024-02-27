@@ -104,6 +104,8 @@
         compatible = "zmk,keymap";
 
         default_layer {
+            display-name = "MAIN";
+
             bindings = <
                 &kp ESC    &kp Q     &kp W    &kp F    &kp P     &kp B                                                 &kp J     &kp L     &kp U      &kp Y      &kp SEMI  &kp DEL
                 &kp TAB    &kp A     &kp R    &kp S    &kp T     &kp G                                                 &kp M     &kp N     &kp E      &kp I      &kp O     &kp SQT
@@ -118,6 +120,8 @@
         };
 
         sym {
+            display-name = "SYM";
+
             bindings = <
                 &kp ESC      &kp AMPS    &kp PRCNT &kp HASH &kp EXCL   &kp LPAR                                             &kp RPAR  &kp AT    &kp DLLR  &kp CARET  &kp ASTRK &kp DEL
                 &kp TAB      &kp N7      &kp N5    &kp N3   &kp N1     &kp N9                                               &kp N0    &kp N2    &kp N4    &kp N6     &kp N8    &kp SQT
@@ -132,6 +136,8 @@
         };
 
         func {
+            display-name = "FN";
+
             bindings = <
                 &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6                                             &kp ESC    &none      &none    &none      &none     &none
                 &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12                                            &none      &kp LEFT   &kp DOWN &kp UP     &kp RIGHT &kp C_VOL_UP
@@ -145,7 +151,8 @@
             >;
         };
 
-        mouse { 
+        mouse {
+            display-name = "MOUSE";
             bindings = <                                                                                                                     /* Scroll up/down are reversed on mac */
                 &none     &none     &none     &none     &none     &none                     /**/                     &none   &msc SCRL_RIGHT &msc SCRL_UP   &msc SCRL_DOWN &msc SCRL_LEFT  &none
                 &none     &none     &mkp MB3  &mkp MB2  &mkp MB1  &none                     /**/                     &none   &mmv MOVE_LEFT  &mmv MOVE_DOWN &mmv MOVE_UP   &mmv MOVE_RIGHT &none
@@ -160,6 +167,8 @@
         };
 
         config { 
+            display-name = "CONF";
+
             bindings = <
                 &none   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &none     &none                     /**/                     &rgb_ug RGB_BRI &rgb_ug RGB_BRD &rgb_ug RGB_COLOR_HSB(30,100,100) &rgb_ug RGB_COLOR_HSB(30,80,100) &rgb_ug RGB_COLOR_HSB(30,100,80) &none
                 &none   &none        &none        &none        &none     &rgb_ug RGB_EFF           /**/                     &rgb_ug RGB_HUI &rgb_ug RGB_HUD &rgb_ug RGB_ON                    &rgb_ug RGB_OFF &rgb_ug RGB_TOG  &none
