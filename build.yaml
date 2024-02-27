@@ -14,7 +14,7 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: kyria_rev3_d_dongle
+    shield: kyria_rev3_d_dongle dongle_display
   - board: nice_nano_v2
     shield: kyria_rev3_d_left
   - board: nice_nano_v2
