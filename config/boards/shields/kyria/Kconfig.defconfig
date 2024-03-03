@@ -1,4 +1,4 @@
-if SHIELD_KYRIA_REV3_D_DONGLE
+if SHIELD_KYRIA_REV3_D_RIGHT
 
 config ZMK_KEYBOARD_NAME
     default "Kyria"

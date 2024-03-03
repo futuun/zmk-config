@@ -10,6 +10,10 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/rgb.h>
 
+#define HAS_MOUSE_TP
+
+#include "includes/mouse_tp.dtsi"
+
 &left_encoder  { steps = <36>; };
 &right_encoder { steps = <36>; };
 &led_strip { chain-length = <25>; };
