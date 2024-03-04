@@ -52,9 +52,8 @@
 // On the nice!nano documentation these are green DX pins:
 // https://nicekeyboards.com/docs/nice-nano/pinout-schematic
 //
-#define MOUSE_PS2_PIN_SCL_PRO_MICRO <&pro_micro 1 GPIO_ACTIVE_HIGH>
-#define MOUSE_PS2_PIN_SDA_PRO_MICRO <&pro_micro 0 GPIO_ACTIVE_HIGH>
-
+#define MOUSE_PS2_PIN_SCL_PRO_MICRO <&gpio0 6 GPIO_ACTIVE_HIGH>
+#define MOUSE_PS2_PIN_SDA_PRO_MICRO <&gpio0 8 GPIO_ACTIVE_HIGH>
 
 // Uncomment and configure this pin if you have an extra free pin and want the
 // controller to perform the Power-On-Reset sequence, which many trackpoints
