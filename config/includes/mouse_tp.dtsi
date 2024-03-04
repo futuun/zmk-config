@@ -123,8 +123,6 @@
 
   &mouse_ps2_input_listener {
     xy-swap;
-    x-invert;
-    y-invert;
 
     // Set the layer that should automatically activate when the mouse is
     // moving.
