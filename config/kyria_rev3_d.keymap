@@ -11,6 +11,14 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/rgb.h>
 
+#define KEYS_L  0  1  2  3  4  5 12 13 14 15 16 17 24 25 26 27 28 29 30 31
+#define KEYS_R  6  7  8  9 10 11 18 19 20 21 22 23 32 33 34 35 36 37 38 39
+#define KEYS_T 40 41 42 43 44 45 46 47 48 49
+
+#define HM_TAPPING_TERM 280
+#define HM_TAPPING_TERM_FAST 175
+#define HM_PRIOR_IDLE 132
+
 &left_encoder  { steps = <36>; };
 &right_encoder { steps = <36>; };
 &led_strip { chain-length = <25>; };
@@ -32,7 +40,6 @@
 
      macros {
         to_0: to_0 {
-            label = "ZM_to_0";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&to 0 &kp F13>;
@@ -65,9 +72,84 @@
             #binding-cells = <0>;
             bindings = <&to 4 &kp F19>;
         };
+
+        to_5: to_5 {
+            label = "ZM_to_5";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to 5 &kp F20>;
+        };
     };
 
     behaviors {
+        // https://github.com/urob/zmk-config#timeless-homerow-mods
+        hml: homerow_mods_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>,  <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM>;
+            quick-tap-ms = <HM_TAPPING_TERM_FAST>;                // repeat on tap-into-hold
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <KEYS_R KEYS_T>;
+            hold-trigger-on-release;
+        };
+
+        hmr: homerow_mods_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM>;
+            quick-tap-ms = <HM_TAPPING_TERM_FAST>;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <KEYS_L KEYS_T>;
+            hold-trigger-on-release;
+        };
+
+        // Positional Homerow mods for shift
+        // Use faster tapping term and disable some features that may
+        // cause false negatives.
+        hmsl: hm_shift_l {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <KEYS_R KEYS_T>;
+            // hold-trigger-on-release;
+        };
+
+        hmsr: hm_shift_r {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <KEYS_L KEYS_T>;
+            // hold-trigger-on-release;
+        };
+
+        hm: hm {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping_term_ms = <50>;
+            flavor = "tap-unless-interrupted";
+            bindings = <&kp>, <&kp>;
+        };
+
         rot_mmv: sensor_rotate_mmv {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
@@ -108,10 +190,10 @@
             display-name = "MAIN";
 
             bindings = <
-                &kp ESC    &kp Q     &kp W    &kp F    &kp P     &kp B                                                 &kp J     &kp L     &kp U      &kp Y      &kp SEMI  &kp DEL
-                &kp TAB    &kp A     &kp R    &kp S    &kp T     &kp G                                                 &kp M     &kp N     &kp E      &kp I      &kp O     &kp SQT
-                &kp GRAVE  &kp Z     &kp X    &kp C    &kp D     &kp V  &to_0     &to_0    /**/ &to_0       &to_0      &kp K     &kp H     &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
-                                              &to_3    &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT  &kp BSPC   &to_2    &kp RGUI  &key_repeat
+                &kp ESC    &kp Q      &kp W      &kp F      &kp P     &kp B                                                 &kp J     &kp L     &kp U      &kp Y      &kp SEMI  &kp DEL
+                &kp TAB    &kp A      &kp R      &kp S      &kp T     &kp G                                                 &kp M     &kp N     &kp E      &kp I      &kp O     &kp SQT
+                &kp GRAVE  &kp Z      &kp X      &kp C      &kp D     &kp V  &to_0     &to_5    /**/ &to_0       &to_0      &kp K     &kp H     &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
+                                                 &to_3      &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT  &kp BSPC   &to_2     &kp RGUI  &key_repeat
             >;
 
             sensor-bindings = <
@@ -180,6 +262,22 @@
             sensor-bindings = <
                 &rgb_hue_encoder
                 &rgb_bri_encoder
+            >;
+        };
+
+        hmrm {
+            display-name = "HMRM";
+
+            bindings = <
+                &kp ESC    &kp Q      &kp W      &kp F      &kp P     &kp B                                                 &kp J     &kp L     &kp U      &kp Y      &kp SEMI  &kp DEL
+                &kp TAB &hml LCTRL A &hml LALT R &hml LGUI S &hmsl LSHFT T &kp G                                             &kp M &hmsr LSHFT N &hmr LGUI E &hmr LALT I &hmr LCTRL O &kp SQT
+                &kp GRAVE  &kp Z      &kp X      &kp C      &kp D     &kp V  &to_0     &to_0    /**/ &to_0       &to_0      &kp K     &kp H     &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
+                                                 &to_3      &kp RCTRL &to_1  &kp SPACE &kp LALT /**/ &kp RSHIFT  &kp BSPC   &to_2     &kp RGUI  &key_repeat
+            >;
+
+            sensor-bindings = <
+                &rot_msc SCRL_UP SCRL_DOWN
+                &rot_msc SCRL_LEFT SCRL_RIGHT
             >;
         };
     };
