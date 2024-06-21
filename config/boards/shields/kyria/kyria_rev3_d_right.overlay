@@ -51,6 +51,12 @@
 &mouse_ps2_input_listener {
     status = "okay";
 
+    move-accelerator = <&input_accelerator_move>;
+    scroll-accelerator = <&input_accelerator_scroll>;
+
+    scroll-layers = < 1 >;
+    scroll-layers-reverse-direction-horizontal;
+
     xy-swap; // my trackpoint doesn't seem to support tp-xy-swap in &mouse_ps2
 };
 

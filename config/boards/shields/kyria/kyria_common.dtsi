@@ -6,6 +6,8 @@
 
 #include <dt-bindings/zmk/matrix_transform.h>
 
+#define PS2_MOUSE_SAMPLING_RATE 100
+
 / {
     chosen {
         zephyr,display = &oled;
@@ -38,6 +40,35 @@
     };
 
     // TODO: RGB node(s)
+
+    input_accelerator_move: input_accelerator_move {
+        status = "okay";
+        compatible = "zmk,input-accelerator";
+
+        acceleration-curve = "sigmoid";
+        acceleration-factor-base = <60>;
+        acceleration-factor-max = <120>;
+        acceleration-factor-rate = <40>;
+        acceleration-start-offset = <7>;
+        max-speed = <50>;
+
+        enable-interval-based-speed;
+        input-default-sending-rate = <PS2_MOUSE_SAMPLING_RATE>;
+    };
+
+    input_accelerator_scroll: input_accelerator_scroll {
+        status = "okay";
+        compatible = "zmk,input-accelerator";
+
+        acceleration-curve = "scroll";
+        acceleration-factor-rate = <20>;
+        acceleration-start-offset = <10>;
+        max-speed = <20>;
+        divisor = <20>;
+
+        enable-interval-based-speed;
+        input-default-sending-rate = <PS2_MOUSE_SAMPLING_RATE>;
+    };
 };
 
 &pro_micro_i2c {

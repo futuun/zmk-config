@@ -17,6 +17,6 @@ manifest:
       import: app/west.yml
     - name: kb_zmk_ps2_mouse_trackpoint_driver
       remote: infused-kim
-      revision: main
+      revision: dev/2024-04-acceleration
   self:
     path: config
