@@ -68,37 +68,6 @@
             hold-trigger-on-release;
         };
 
-        // Positional Homerow mods for shift
-        // Use faster tapping term and disable some features that may
-        // cause false negatives.
-        hmsl: hm_shift_l {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
-
-            flavor = "balanced";
-            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
-            quick-tap-ms = <175>;
-            require-prior-idle-ms = <HM_PRIOR_IDLE>;
-
-            hold-trigger-key-positions = <KEYS_R KEYS_T>;
-            // hold-trigger-on-release;
-        };
-
-        hmsr: hm_shift_r {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
-
-            flavor = "balanced";
-            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
-            quick-tap-ms = <175>;
-            require-prior-idle-ms = <HM_PRIOR_IDLE>;
-
-            hold-trigger-key-positions = <KEYS_L KEYS_T>;
-            // hold-trigger-on-release;
-        };
-
         rot_mmv: sensor_rotate_mmv {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
@@ -147,7 +116,7 @@
 
             bindings = <
                 &kp ESC    &kp Q        &kp W       &kp F       &kp P         &kp B                                      &kp J  &kp L         &kp U       &kp Y       &kp SEMI     &key_repeat
-                &caps_word &hml LCTRL A &hml LALT R &hml LGUI S &hmsl LSHFT T &kp G                                      &kp M  &hmsr RSHFT N &hmr RGUI E &hmr RALT I &hmr RCTRL O &kp SQT
+                &caps_word &hml LCTRL A &hml LALT R &hml LGUI S &hml LSHFT T  &kp G                                      &kp M  &hmr RSHFT N  &hmr RGUI E &hmr RALT I &hmr RCTRL O &kp SQT
                 &kp GRAVE  &kp Z        &kp X       &kp C       &kp D         &kp V  &to 0   &to 0  /**/ &to 0  &to 0    &kp K  &kp H         &kp COMMA   &kp DOT     &kp FSLH     &kp ENTER
                                                     &to 4       &to 0         LTH(1) &spctab LTH(1) /**/ LTH(2) &bspcdel LTH(2) &to 0         &key_repeat
             >;
@@ -163,7 +132,7 @@
 
             bindings = <
                 &kp ESC    &kp AMPS      &kp PRCNT    &kp HASH     &kp EXCL       &kp LPAR                                   &kp RPAR &kp AT         &kp DLLR     &kp CARET    &kp ASTRK     &key_repeat
-                &caps_word &hml LCTRL N7 &hml LALT N5 &hml LGUI N3 &hmsl LSHFT N1 &kp N9                                     &kp N0   &hmsr LSHFT N2 &hmr LGUI N4 &hmr LALT N6 &hmr LCTRL N8 &kp SQT
+                &caps_word &hml LCTRL N7 &hml LALT N5 &hml LGUI N3 &hml LSHFT N1  &kp N9                                     &kp N0   &hmr LSHFT N2  &hmr LGUI N4 &hmr LALT N6 &hmr LCTRL N8 &kp SQT
                 &kp GRAVE  &kp UNDER     &kp PIPE     &kp BSLH     &kp MINUS      &kp LBKT &to 0  &to 0 /**/ &to 0  &to 0    &kp RBKT &kp EQUAL      &kp COMMA    &kp DOT      &kp FSLH      &kp ENTER
                                                       &to 0        &to 0          &to 0   &spctab &to 0 /**/ LTH(2) &bspcdel LTH(2)   &to 0          &key_repeat
             >;
@@ -207,8 +176,8 @@
             bindings = <
                 &kp ESC    &kp Q  &kp W  &kp F  &kp P  &kp B                                              &kp J    &kp L  &kp U      &kp Y      &kp SEMI  &key_repeat
                 &caps_word &kp A  &kp R  &kp S  &kp T  &kp G                                              &kp M    &kp N  &kp E      &kp I      &kp O     &kp SQT
-                &kp GRAVE  &kp Z  &kp X  &kp C  &kp D  &kp V     &to 0   &to 4    /**/ &to 0     &to 0    &kp K    &kp H  &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
-                                         &to 0  &to 0  &kp LCTRL &spctab &kp LALT /**/ &kp LSHFT &bspcdel &kp LGUI &to 0  &key_repeat
+                &kp GRAVE  &kp Z  &kp X  &kp C  &kp D  &kp V     &to 4   &to 4    /**/ &to 4     &to 4    &kp K    &kp H  &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
+                                         &to 0  &to 4  &kp LCTRL &spctab &kp LALT /**/ &kp LSHFT &bspcdel &kp LGUI &to 4  &key_repeat
             >;
         };
     };
