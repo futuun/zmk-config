@@ -1,0 +1,14 @@
+.DS_Store
+
+.zmk/
+
+# west workspace (west init -l config && west update)
+.west/
+zmk/
+zephyr/
+modules/
+kb_zmk_ps2_mouse_trackpoint_driver/
+
+# local build artifacts (see build.sh)
+build/
+firmware/

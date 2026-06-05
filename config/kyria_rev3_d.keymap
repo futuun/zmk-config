@@ -4,13 +4,22 @@
  * SPDX-License-Identifier: MIT
  */
 #include <behaviors.dtsi>
-#include <behaviors/mouse_keys.dtsi>
-#include <behaviors/mouse_setting.dtsi>
+#include <input/processors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/pointing.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 #define LTH(layer) &lth layer layer
+
+// Encoder pointing params: the *_enc two-axis behaviors tick every 20ms, so a
+// 30ms sensor tap emits exactly one tick of speed*0.02 — these give 1 wheel
+// unit / 12 px per detent, deterministically (raw detents, good for testing
+// host-side smoothing).
+#define ENC_SCRL_UP    MOVE_Y(50)
+#define ENC_SCRL_DOWN  MOVE_Y(-50)
+#define ENC_SCRL_LEFT  MOVE_X(-50)
+#define ENC_SCRL_RIGHT MOVE_X(50)
 
 #define KEYS_L  0  1  2  3  4  5 12 13 14 15 16 17 24 25 26 27 28 29 30 31
 #define KEYS_R  6  7  8  9 10 11 18 19 20 21 22 23 32 33 34 35 36 37 38 39
@@ -20,22 +29,42 @@
 #define HM_TAPPING_TERM_FAST 175
 #define HM_PRIOR_IDLE 132
 
-&left_encoder  { steps = <36>; };
-&right_encoder { steps = <36>; };
+// 2x speed for the held &mmv / &msc keymap keys (FN layer)
+&mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
+&msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
 
 / {
-    input_configs {
-        compatible = "zmk,input-configs";
+    // Encoder-dedicated pointing devices. The stock &mmv/&msc velocity model
+    // emits nothing for short sensor taps (sub-unit movement is discarded on
+    // release), so encoders get their own instances where one tap = one tick.
+    msc_enc: msc_enc {
+        compatible = "zmk,behavior-input-two-axis";
+        #binding-cells = <1>;
+        x-input-code = <INPUT_REL_HWHEEL>;
+        y-input-code = <INPUT_REL_WHEEL>;
+        trigger-period-ms = <20>;
+        time-to-max-speed-ms = <0>;
+        acceleration-exponent = <0>;
+    };
 
-        mmv {
-            device = <&mmv>;
-            scale-multiplier = <2>;
-        };
+    mmv_enc: mmv_enc {
+        compatible = "zmk,behavior-input-two-axis";
+        #binding-cells = <1>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        trigger-period-ms = <20>;
+        time-to-max-speed-ms = <0>;
+        acceleration-exponent = <0>;
+    };
 
-        msc {
-            device = <&msc>;
-            scale-multiplier = <2>;
-        };
+    msc_enc_listener {
+        compatible = "zmk,input-listener";
+        device = <&msc_enc>;
+    };
+
+    mmv_enc_listener {
+        compatible = "zmk,input-listener";
+        device = <&mmv_enc>;
     };
 
     behaviors {
@@ -43,7 +72,7 @@
         hml: homerow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            bindings = <&kp>,  <&kp>;
+            bindings = <&kp>, <&kp>;
 
             flavor = "balanced";
             tapping-term-ms = <HM_TAPPING_TERM>;
@@ -71,15 +100,15 @@
         rot_mmv: sensor_rotate_mmv {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
-            tap-ms = <100>;
-            bindings = <&mmv>, <&mmv>;
+            tap-ms = <30>;
+            bindings = <&mmv_enc>, <&mmv_enc>;
         };
 
         rot_msc: sensor_rotate_msc {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
-            tap-ms = <100>;
-            bindings = <&msc>, <&msc>;
+            tap-ms = <30>;
+            bindings = <&msc_enc>, <&msc_enc>;
         };
 
         // tap/hold layer
@@ -97,14 +126,14 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp BSPC>, <&kp DEL>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            mods = <(MOD_LALT|MOD_RALT)>;
         };
 
         spctab: space_tab {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp SPACE>, <&kp TAB>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            mods = <(MOD_LALT|MOD_RALT)>;
         };
     };
 
@@ -118,12 +147,12 @@
                 &kp ESC    &kp Q        &kp W       &kp F       &kp P         &kp B                                      &kp J  &kp L         &kp U       &kp Y       &kp SEMI     &key_repeat
                 &caps_word &hml LCTRL A &hml LALT R &hml LGUI S &hml LSHFT T  &kp G                                      &kp M  &hmr RSHFT N  &hmr RGUI E &hmr RALT I &hmr RCTRL O &kp SQT
                 &kp GRAVE  &kp Z        &kp X       &kp C       &kp D         &kp V  &to 0   &to 0  /**/ &to 0  &to 0    &kp K  &kp H         &kp COMMA   &kp DOT     &kp FSLH     &kp ENTER
-                                                    &to 4       &to 0         LTH(1) &spctab LTH(1) /**/ LTH(2) &bspcdel LTH(2) &to 0         &key_repeat
+                                                    &to 4       &to 0         LTH(1) &spctab LTH(2) /**/ LTH(1) &bspcdel LTH(2) &to 0         &key_repeat
             >;
 
             sensor-bindings = <
-                &rot_msc SCRL_UP SCRL_DOWN
-                &rot_msc SCRL_LEFT SCRL_RIGHT
+                &rot_msc ENC_SCRL_UP ENC_SCRL_DOWN
+                &rot_msc ENC_SCRL_LEFT ENC_SCRL_RIGHT
             >;
         };
 
@@ -134,7 +163,7 @@
                 &kp ESC    &kp AMPS      &kp PRCNT    &kp HASH     &kp EXCL       &kp LPAR                                   &kp RPAR &kp AT         &kp DLLR     &kp CARET    &kp ASTRK     &key_repeat
                 &caps_word &hml LCTRL N7 &hml LALT N5 &hml LGUI N3 &hml LSHFT N1  &kp N9                                     &kp N0   &hmr LSHFT N2  &hmr LGUI N4 &hmr LALT N6 &hmr LCTRL N8 &kp SQT
                 &kp GRAVE  &kp UNDER     &kp PIPE     &kp BSLH     &kp MINUS      &kp LBKT &to 0  &to 0 /**/ &to 0  &to 0    &kp RBKT &kp EQUAL      &kp COMMA    &kp DOT      &kp FSLH      &kp ENTER
-                                                      &to 0        &to 0          &to 0   &spctab &to 0 /**/ LTH(2) &bspcdel LTH(2)   &to 0          &key_repeat
+                                                      &to 0        &to 0          &to 0  &spctab LTH(2) /**/ &to 0  &bspcdel LTH(2)   &to 0          &key_repeat
             >;
 
             sensor-bindings = <
@@ -143,30 +172,30 @@
             >;
         };
 
-        func {
-            display-name = "FN";
+        mouse {
+            display-name = "MOUSE";
 
             bindings = <
-                &kp F1 &kp F2          &kp F3       &kp F4         &kp F5         &kp F6                                           &kp F7     &kp F8     &kp F9   &kp F10    &kp F11   &kp F12
-                &none  &none           &mkp MB3     &mkp MB2       &mkp MB1       &none                                            &kp ESC    &kp LEFT   &kp DOWN &kp UP     &kp RIGHT &kp C_VOL_UP
-                &none  &msc SCRL_RIGHT &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_LEFT &none  &to 0   &to 0    /**/ &to 0      &to 0    &kp C_MUTE &kp C_PREV &kp C_PP &kp C_NEXT &none     &kp C_VOL_DN
-                                                    &to 3          &to 0          LTH(1) &spctab &kp LALT /**/ &kp RSHIFT &bspcdel &to 0      &to 0      &key_repeat
+                &none  &kp PG_UP  &kp HOME  &mkp RCLK &mkp LCLK  &none                                      &none      &msc SCRL_RIGHT &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_LEFT &kp C_MUTE
+                &none  &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &none                                      &none      &kp LEFT        &kp DOWN     &kp UP         &kp RIGHT      &kp C_VOL_UP
+                &none  &kp PG_DN  &kp END   &mkp RCLK &mkp LCLK  &none  &to 0   &to 0  /**/ &to 0  &to 0    &none      &kp C_PREV      &kp C_PP     &kp C_PIP      &kp C_NEXT     &kp C_VOL_DN
+                                            &to 0     &to 0      LTH(1) &spctab &to 0  /**/ LTH(1) &bspcdel &to 0      &to 0           &key_repeat
             >;
 
             sensor-bindings = <
                 &inc_dec_kp C_VOL_UP C_VOL_DN
-                &inc_dec_kp C_VOL_UP C_VOL_DN
+                &inc_dec_kp C_BRI_UP C_BRI_DN
             >;
         };
 
-        config { 
-            display-name = "CONF";
+        func {
+            display-name = "FN";
 
             bindings = <
-                &trans  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &trans    &trans                                      &trans  &trans  &trans  &trans  &trans  &trans
-                &trans  &trans       &trans       &trans       &trans    &trans                                      &trans  &trans  &trans  &trans  &trans  &trans
-                &trans  &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &trans    &trans  &trans  &trans /**/ &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                  &trans       &trans    &trans  &trans  &trans /**/ &trans  &trans  &trans  &trans  &trans
+                &none  &kp F1  &kp F2  &kp F3  &kp F4  &none                                  &none  &kp F13 &kp F14 &kp F15 &kp F16 &none
+                &none  &kp F5  &kp F6  &kp F7  &kp F8  &none                                  &none  &kp F17 &kp F18 &kp F19 &kp F20 &none
+                &none  &kp F9  &kp F10 &kp F11 &kp F12 &none  &to 0  &to 0 /**/ &to 0  &to 0  &none  &kp F21 &kp F22 &kp F23 &kp F24 &none
+                                       &to 0   &to 0   &to 0  &to 0  &to 0 /**/ &to 0  &to 0  &to 0  &to 0  &to 0
             >;
         };
 
@@ -176,8 +205,8 @@
             bindings = <
                 &kp ESC    &kp Q  &kp W  &kp F  &kp P  &kp B                                              &kp J    &kp L  &kp U      &kp Y      &kp SEMI  &key_repeat
                 &caps_word &kp A  &kp R  &kp S  &kp T  &kp G                                              &kp M    &kp N  &kp E      &kp I      &kp O     &kp SQT
-                &kp GRAVE  &kp Z  &kp X  &kp C  &kp D  &kp V     &to 4   &to 4    /**/ &to 4     &to 4    &kp K    &kp H  &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
-                                         &to 0  &to 4  &kp LCTRL &spctab &kp LALT /**/ &kp LSHFT &bspcdel &kp LGUI &to 4  &key_repeat
+                &kp GRAVE  &kp Z  &kp X  &kp C  &kp D  &kp V     &to 0   &to 0    /**/ &to 0     &to 0    &kp K    &kp H  &kp COMMA  &kp DOT    &kp FSLH  &kp ENTER
+                                         &to 3  &to 0  &kp LCTRL &spctab &kp LALT /**/ &kp LSHFT &bspcdel &kp LGUI &to 0  &key_repeat
             >;
         };
     };
