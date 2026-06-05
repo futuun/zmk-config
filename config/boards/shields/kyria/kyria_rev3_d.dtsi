@@ -1,40 +1,80 @@
-#include "kyria_common.dtsi"
+/*
+ * Kyria rev3 with PS/2 trackpoint ("kyria_rev3_d").
+ *
+ * Flattened from the in-tree kyria shield (kyria_common.dtsi + kyria_rev3)
+ * for this single hardware variant.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <dt-bindings/zmk/matrix_transform.h>
+
+#include "kyria-layouts.dtsi"
 
 / {
-	chosen {
-		zmk,matrix-transform = &default_transform;
-	};
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &splitkb_kyria_6col_layout;
+    };
 
-	default_transform: keymap_transform_0 {
-		compatible = "zmk,matrix-transform";
-		columns = <14>;
-		rows = <4>;
-		// | MX6  | MX5  | MX4  | MX3  | MX2  | MX1  |                               | MX1  | MX2  | MX3  | MX4  | MX5  | MX6  |
-		// | MX12 | MX11 | MX10 | MX9  | MX8  | MX7  |                               | MX7  | MX8  | MX9  | MX10 | MX11 | MX12 |
-		// | MX20 | MX19 | MX18 | MX17 | MX16 | MX15 | MX14 | MX13 |   | MX13 | MX14 | MX15 | MX16 | MX17 | MX18 | MX19 | MX20 |
-		//                    | MX25 | MX24 | MX23 | MX22 | MX21 |       | MX21 | MX22 | MX23 | MX24 | MX25 |
-		map = <
-		RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)                                  RC(0,8) RC(0,9) RC(0,10) RC(0,11) RC(0,12) RC(0,13)
-		RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)                                  RC(1,8) RC(1,9) RC(1,10) RC(1,11) RC(1,12) RC(1,13)
-		RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(3,3) RC(2,6) RC(2,7) RC(3,10) RC(2,8) RC(2,9) RC(2,10) RC(2,11) RC(2,12) RC(2,13)
-		RC(3,2) RC(3,4) RC(3,5) RC(3,1) RC(3,6) RC(3,7) RC(3,12) RC(3,8) RC(3,9) RC(3,11)
-		>;
-	};
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+
+        diode-direction = "col2row";
+    };
+
+    // ALPS 36-detent encoders (Mouser), 18 pulse-cycles/rotation = 72
+    // quadrature edges. With triggers-per-rotation = 36 each detent is
+    // exactly one trigger (10 degrees), no remainder drift.
+    left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        steps = <72>;
+        a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        status = "disabled";
+    };
+
+    right_encoder: encoder_right {
+        compatible = "alps,ec11";
+        steps = <72>;
+        a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        status = "disabled";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder &right_encoder>;
+        triggers-per-rotation = <36>;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <14>;
+        rows = <4>;
+        // | MX6  | MX5  | MX4  | MX3  | MX2  | MX1  |                               | MX1  | MX2  | MX3  | MX4  | MX5  | MX6  |
+        // | MX12 | MX11 | MX10 | MX9  | MX8  | MX7  |                               | MX7  | MX8  | MX9  | MX10 | MX11 | MX12 |
+        // | MX20 | MX19 | MX18 | MX17 | MX16 | MX15 | MX14 | MX13 |   | MX13 | MX14 | MX15 | MX16 | MX17 | MX18 | MX19 | MX20 |
+        //                    | MX25 | MX24 | MX23 | MX22 | MX21 |       | MX21 | MX22 | MX23 | MX24 | MX25 |
+        map = <
+        RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)                                  RC(0,8) RC(0,9) RC(0,10) RC(0,11) RC(0,12) RC(0,13)
+        RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)                                  RC(1,8) RC(1,9) RC(1,10) RC(1,11) RC(1,12) RC(1,13)
+        RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(3,3) RC(2,6) RC(2,7) RC(3,10) RC(2,8) RC(2,9) RC(2,10) RC(2,11) RC(2,12) RC(2,13)
+        RC(3,2) RC(3,4) RC(3,5) RC(3,1) RC(3,6) RC(3,7) RC(3,12) RC(3,8) RC(3,9) RC(3,11)
+        >;
+    };
 };
 
-&left_encoder {
-	a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-	b-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+&splitkb_kyria_6col_layout {
+    transform = <&default_transform>;
 };
-
-&right_encoder {
-	a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-	b-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-};
-
 
 /*
  * PS/2 Mouse / Trackpoint
+ *
+ * Driver: badjeff/kb_zmk_ps2_mouse_trackpoint_driver (UART-based PS/2).
+ * Everything stays disabled here; the right half enables it in its overlay.
  */
 
 #define MOUSE_PS2_PIN_SCL_PRO_MICRO <&gpio0 20 GPIO_ACTIVE_HIGH>
@@ -48,63 +88,44 @@
 #define MOUSE_PS2_PIN_UNEXPOSED_RX <NRF_PSEL(UART_RX, 0, 28)>
 
 &pinctrl {
-	uart0_ps2_default: uart0_ps2_default {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-					MOUSE_PS2_PIN_SDA_PINCTRL;
-		};
-	};
+    uart0_ps2_default: uart0_ps2_default {
+        group1 {
+            psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+                    MOUSE_PS2_PIN_SDA_PINCTRL;
+        };
+    };
 
-	uart0_ps2_sleep: uart0_ps2_sleep {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-					MOUSE_PS2_PIN_SDA_PINCTRL;
-			low-power-enable;
-		};
-	};
-
-	uart0_ps2_off: uart0_ps2_off {
-		group1 {
-			psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-					MOUSE_PS2_PIN_UNEXPOSED_RX;
-		};
-	};
+    uart0_ps2_off: uart0_ps2_off {
+        group1 {
+            psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
+                    MOUSE_PS2_PIN_UNEXPOSED_RX;
+        };
+    };
 };
 
 &uart0 {
-	status = "disabled";
-	compatible = "nordic,nrf-uarte";
-	current-speed = <14400>;
-	pinctrl-0 = <&uart0_ps2_default>;
-	pinctrl-1 = <&uart0_ps2_off>;
+    status = "disabled";
+    compatible = "nordic,nrf-uarte";
+    current-speed = <14400>;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
 
-	pinctrl-names = "default", "sleep";
+    pinctrl-names = "default", "sleep";
 
-	uart_ps2: uart_ps2 {
-		status="disabled";
-		compatible = "uart-ps2";
-		scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-		sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
-	};
+    uart_ps2: uart_ps2 {
+        status = "disabled";
+        compatible = "uart-ps2";
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+    };
 };
 
-
 / {
-	mouse_ps2: mouse_ps2 {
-		status = "disabled";
-		compatible = "zmk,input-mouse-ps2";
+    mouse_ps2: mouse_ps2 {
+        status = "disabled";
+        compatible = "zmk,input-mouse-ps2";
 
-		ps2-device = <&uart_ps2>;
-
-#ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
-		rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
-#endif
-	};
-
-	mouse_ps2_input_listener: mouse_ps2_input_listener {
-		compatible = "zmk,input-listener-ps2";
-		status = "disabled";
-
-		device = <&mouse_ps2>;
-	};
+        ps2-device = <&uart_ps2>;
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+    };
 };
