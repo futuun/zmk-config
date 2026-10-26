@@ -1,14 +1,21 @@
 manifest:
   remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
     - name: badjeff
       url-base: https://github.com/badjeff
+    - name: futuun
+      url-base: https://github.com/futuun
   projects:
     - name: zmk
-      remote: badjeff
-      revision: 773dec58eaacaef4703b3e4595e50bd71f6cad3d
+      remote: zmkfirmware
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
       import: app/west.yml
     - name: kb_zmk_ps2_mouse_trackpoint_driver
       remote: badjeff
-      revision: 7ab7846a95b233c3ada0e0605b972f36353e7bc4
+      revision: 5ff0b24863ab74390adcc447b0575fcd78442514
+    - name: zmk-unicode
+      remote: futuun
+      revision: fdd67fc97096ef18fae29e3d2299127efe94f615
   self:
     path: config

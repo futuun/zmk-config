@@ -22,7 +22,8 @@ mkdir -p "$OUT"
 for shield in "${TARGETS[@]}"; do
     echo "==> Building $shield"
     west build -p -s zmk/app -d "build/$shield" -b "$BOARD" -- \
-        -DSHIELD="$shield" -DZMK_CONFIG="$PWD/config"
+        -DSHIELD="$shield" -DZMK_CONFIG="$PWD/config" \
+        -DZEPHYR_TOOLCHAIN_VARIANT=zephyr
     cp "build/$shield/zephyr/zmk.uf2" "$OUT/$shield.uf2"
 done
 
